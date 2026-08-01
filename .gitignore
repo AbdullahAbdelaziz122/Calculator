@@ -1,0 +1,47 @@
+# Object files and Compiled bytecode
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output and Executables
+*.ilk
+*.map
+*.exp
+*.exe
+*.out
+a.out
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries and Archives
+*.lib
+*.a
+*.la
+*.lo
+*.so
+*.dll
+*.dylib
+
+# Build directories (if you use CMake or Meson)
+build/
+Build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Operating system / Editor specific files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.bak
