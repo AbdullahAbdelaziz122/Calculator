@@ -3,6 +3,9 @@
 *.ko
 *.obj
 *.elf
+Calculator/calc
+calc
+
 
 # Linker output and Executables
 *.ilk

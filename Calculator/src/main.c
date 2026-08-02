@@ -17,11 +17,52 @@
 
 
 
-// bool isValidChar(char c){
-// switch (c) {
-//     case 1:
-//     }
-// }
+bool isValidChar(char c){
+
+// check is digit
+if(isdigit(c)){
+    return true;
+}
+
+// check operator
+
+switch (c) {
+    case '+':
+        return true;
+        break;
+
+    case '-':
+        return true;
+        break;
+
+    case '*':
+        return true;
+        break;
+
+    case '/':
+        return true;
+        break;
+
+    case '(':
+        return true;
+        break;
+
+    case ')':
+        return true;
+        break;
+
+    case ' ':
+        return true;
+        break;
+
+    default:
+        return false;
+        break;
+}
+
+
+
+}
 
 
 int main()
@@ -34,35 +75,45 @@ int main()
     if(fgets(buffer, sizeof(buffer), stdin) != NULL){
 
 
-        //printf("%d", (int)strlen(buffer));
+        size_t len = strlen(buffer);
 
-        // check buffer overflow
-        if(buffer[(int)strlen(buffer) - 1] != '\n')
+        if (len > 0 && buffer[len - 1] != '\n')
         {
-             perror("Error: Input too long");
-             return -1;
+            // Input was truncated
+            // TODO: clear the rest input buffer here
+            fprintf(stderr, "Error: Input too long\n");
+            return -1;
         }
 
+        // remove the trailing newline character added by fgets
+        buffer[strcspn(buffer, "\n")] = '\0';
+
+
+        // TODO: Trim leading/trailing spaces
+
+
         // check empty error
-        if(strlen(buffer) - 1 == 0)
+        if(buffer[0] == '\0')
         {
             perror("Error: Empty input");
             return -1;
         }
 
-        // // check input
-        // for (int i = 0; i < (int)strlen(buffer); ++i)
-        // {
-        //     if(!isValid(buffer[i])){
-        //         perror("Error: Invalid character");
-        //         printf("You can't use: %c\n", buffer[i]);
-        //         return -1;
-        //     }
-        // }
+//       TODO: Remove thses debugers
+//       printf("Size of buffer: %d\n", (int)strlen(buffer));
+//       printf("last character: %c\n", buffer[(int)strlen(buffer)]);
 
 
-        // remove the trailing newline character added by fgets
-        buffer[strcspn(buffer, "\n")] = '\0';
+        // check input
+        for (int i = 0; i < (int)strlen(buffer); ++i)
+        {
+            if(!isValidChar(buffer[i])){
+                perror("Error: Invalid character");
+                printf("You can't use: %c\n", buffer[i]);
+                return -1;
+            }
+        }
+
 
         printf("You entered: %s\n", buffer);
     }
