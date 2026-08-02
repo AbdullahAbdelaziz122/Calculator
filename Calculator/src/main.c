@@ -12,7 +12,7 @@
 # include <string.h>
 # include <stdbool.h>
 # include <ctype.h>
-
+# include "tokenizer.h"
 
 
 
@@ -95,7 +95,7 @@ int main()
         // check empty error
         if(buffer[0] == '\0')
         {
-            perror("Error: Empty input");
+            fprintf(stderr, "Error: Empty input\n");
             return -1;
         }
 
@@ -108,7 +108,7 @@ int main()
         for (int i = 0; i < (int)strlen(buffer); ++i)
         {
             if(!isValidChar(buffer[i])){
-                perror("Error: Invalid character");
+                fprintf(stderr, "Error: Invalid character '%c'\n", buffer[i]);
                 printf("You can't use: %c\n", buffer[i]);
                 return -1;
             }
@@ -116,6 +116,38 @@ int main()
 
 
         printf("You entered: %s\n", buffer);
+
+
+        // Tokenization
+        Token tokens[100];
+        int token_count = tokenize(buffer, tokens, 100);
+
+        if (token_count == -1) {
+            fprintf(stderr, "Tokenization failed\n");
+            return -1;
+        }
+
+        printf("Tokens found: %d\n", token_count);
+        for (int i = 0; i < token_count; i++) {
+            switch (tokens[i].type) {
+                case TOKEN_NUMBER:
+                    printf("Token %d: NUMBER %d\n", i, tokens[i].value);
+                    break;
+                case TOKEN_OPERATOR:
+                    printf("Token %d: OPERATOR '%c'\n", i, tokens[i].op);
+                    break;
+                case TOKEN_LPAREN:
+                    printf("Token %d: LPAREN\n", i);
+                    break;
+                case TOKEN_RPAREN:
+                    printf("Token %d: RPAREN\n", i);
+                    break;
+                default:
+                    printf("Token %d: UNKNOWN\n", i);
+                    break;
+            }
+        }
+
     }
     else{
         return -1;
