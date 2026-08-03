@@ -135,3 +135,23 @@ int tokenize(const char *input, Token *tokens, int max_tokens) {
 
     return token_count;
 }
+
+void print_token(Token t){
+    switch (t.type) {
+                case TOKEN_NUMBER:
+                    printf("Token: NUMBER %d\n", t.value);
+                    break;
+                case TOKEN_OPERATOR:
+                    printf("Token: OPERATOR '%c'\n", t.op);
+                    break;
+                case TOKEN_LPAREN:
+                    printf("Token: LPAREN\n");
+                    break;
+                case TOKEN_RPAREN:
+                    printf("Token: RPAREN\n");
+                    break;
+                default:
+                    printf("Token: UNKNOWN\n");
+                    break;
+            }
+}
