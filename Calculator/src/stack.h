@@ -13,7 +13,7 @@ typedef struct {
     int top;
 } Stack;
 
-void initialize(Stack *stack);
+void init_stack(Stack *stack);
 void push(Stack *stack, Token t);
 Token pop (Stack *stack);
 Token peek(Stack *stack);

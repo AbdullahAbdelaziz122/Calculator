@@ -155,3 +155,22 @@ void print_token(Token t){
                     break;
             }
 }
+
+void print_tokens(Token *tokens, int tokens_count){
+    for(int i =0; i<tokens_count; i++){
+        switch (tokens[i].type) {
+                case TOKEN_NUMBER:
+                    printf("%d ", tokens[i].value);
+                    break;
+                case TOKEN_OPERATOR:
+                    printf("%c ", tokens[i].op);
+                    break;
+                case TOKEN_LPAREN:
+                case TOKEN_RPAREN:
+                    break;
+                default:
+                    printf("Token %d: UNKNOWN\n", i);
+                    break;
+            }
+    }
+}

@@ -4,46 +4,37 @@
 
 const Token INVALID_TOKEN = {TOKEN_INVALID, 0, 0};
 
-void initialize(Stack *stack){
-    stack->top=-1;
+void init_stack(Stack *stack) {
+    stack->top = -1;
 }
 
-bool is_empty(Stack *stack){
-    return (stack ->top == -1);
+bool is_empty(Stack *stack) {
+    return stack->top == -1;
 }
 
-bool is_full(Stack *stack){
-    return (stack ->top == MAX_SIZE);
+bool is_full(Stack *stack) {
+    return stack->top == MAX_SIZE - 1;
 }
 
-void push(Stack *stack, Token t){
-    if(is_full(stack)){
-        printf("Stack overflow\n");
+void push(Stack *stack, Token t) {
+    if (is_full(stack)) {
+        fprintf(stderr, "Error: Stack overflow\n");
         return;
     }
-    else{
-        stack->data[++stack->top] = t ;
-        printf("pushed token to stack\n");
-        print_token(t);
-    }
+    stack->data[++stack->top] = t;
 }
 
-Token pop(Stack *stack){
-    if(is_empty(stack)){
-        printf("Stack Underflow\n");
+Token pop(Stack *stack) {
+    if (is_empty(stack)) {
+        fprintf(stderr, "Error: Stack underflow\n");
         return INVALID_TOKEN;
     }
-
-    Token popped = stack->data[stack->top];
-    printf("Popped token from stack\n");
-    print_token(popped);
-
-    return popped;
+    return stack->data[stack->top--];
 }
 
 Token peek(Stack *stack) {
     if (is_empty(stack)) {
-        printf("Stack is empty\n");
+        fprintf(stderr, "Error: Stack is empty\n");
         return INVALID_TOKEN;
     }
     return stack->data[stack->top];
