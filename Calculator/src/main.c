@@ -68,7 +68,8 @@ int main() {
         }
     }
 
-    printf("You entered: %s\n", buffer);
+    //DEBUGING
+    //printf("You entered: %s\n", buffer);
 
     // Tokenize
     Token tokens[100];
@@ -78,9 +79,10 @@ int main() {
         return -1;
     }
 
-    printf("Tokens found: %d\n", token_count);
-    print_tokens(tokens, token_count);
-    printf("\n");
+    //DEBUGING
+    //printf("Tokens found: %d\n", token_count);
+    //print_tokens(tokens, token_count);
+    //printf("\n");
 
     // Shunting-Yard
     Token postfix[100];
@@ -90,7 +92,17 @@ int main() {
         return -1;
     }
 
-    print_postfix(postfix, postfix_count);
+    //DEBUGING
+    //print_postfix(postfix, postfix_count);
+
+
+    int result;
+    if (!evaluate_postfix(postfix, postfix_count, &result)) {
+        fprintf(stderr, "Evaluation failed\n");
+        return -1;
+    }
+
+    printf("Result: %d\n", result);
 
     return 0;
 }

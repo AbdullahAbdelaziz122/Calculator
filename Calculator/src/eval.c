@@ -1,7 +1,9 @@
+#include <stdio.h>
+#include <limits.h>
 #include "eval.h"
 #include "stack.h"
 #include "tokenizer.h"
-#include <stdio.h>
+#include "value_stack.h"
 
 
 
@@ -107,4 +109,72 @@ void print_postfix(Token *postfix, int count) {
     printf("Postfix expression: ");
     print_tokens(postfix, count);
     printf("\n");
+}
+
+int evaluate_result(int left, int right, char op) {
+    switch (op) {
+        case '+': return left + right;
+        case '-': return left - right;
+        case '*': return left * right;
+        case '/':
+            if (right == 0) {
+                fprintf(stderr, "Division by zero\n");
+                return 0;  // Caller should check for error separately
+            }
+            return left / right;
+        default:
+            fprintf(stderr, "Error: Unknown operator '%c'\n", op);
+            return 0;
+    }
+}
+
+bool evaluate_postfix(Token *postfix, int postfix_count, int *result) {
+    ValueStack stack;
+    init_value_stack(&stack);
+
+    for (int i = 0; i < postfix_count; i++) {
+        Token t = postfix[i];
+
+        switch (t.type) {
+            case TOKEN_NUMBER:
+                if (!push_value(&stack, t.value)) {
+                    return false;
+                }
+                break;
+
+            case TOKEN_OPERATOR: {
+                int right_operand, left_operand;
+                if (!pop_value(&stack, &right_operand)) {
+                    fprintf(stderr, "Error: Missing right operand for operator '%c'\n", t.op);
+                    return false;
+                }
+                if (!pop_value(&stack, &left_operand)) {
+                    fprintf(stderr, "Error: Missing left operand for operator '%c'\n", t.op);
+                    return false;
+                }
+
+                if (t.op == '/' && right_operand == 0) {
+                    fprintf(stderr, "Error: Division by zero\n");
+                    return false;
+                }
+
+                int result_val = evaluate_result(left_operand, right_operand, t.op);
+                if (!push_value(&stack, result_val)) {
+                    return false;
+                }
+                break;
+            }
+
+            default:
+                fprintf(stderr, "Error: Invalid token in postfix expression\n");
+                return false;
+        }
+    }
+
+    if (!pop_value(&stack, result)) {
+        fprintf(stderr, "Error: No result to return\n");
+        return false;
+    }
+
+    return true;
 }
