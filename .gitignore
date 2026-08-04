@@ -48,3 +48,8 @@ Thumbs.db
 .idea/
 *.swp
 *.bak
+
+# eclipse 
+.cproject
+.project
+.settings/
