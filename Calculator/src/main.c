@@ -3,7 +3,7 @@
  Name        : Calculator.c
  Author      : Abdullah Abdelaziz
  Version     :
- Copyright   : Your copyright notice
+ Copyright   : MIT License
  Description : Hello World in C, Ansi-style
  ============================================================================
  */
